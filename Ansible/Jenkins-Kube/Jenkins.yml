@@ -1,0 +1,34 @@
+- hosts: Jenkins_kube
+  tasks:
+    - name: Installing java
+      package:
+        name: java-11-openjdk-devel
+        state: present
+
+    - name: Adding jenkins repo key
+      rpm_key:
+        state: present
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+    - name: Setting Jenkins repo
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /tmp/jenkins.repo
+
+    - name: Move Jenkins repository file to /etc/yum.repos.d/
+      copy:
+        src: "/tmp/jenkins.repo"
+        dest: "/etc/yum.repos.d/jenkins.repo"
+        remote_src: yes
+
+    - name: Installing Jenkins
+      package:
+        name: jenkins
+        state: present
+
+    - name: Starting Jenkins Server
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+
