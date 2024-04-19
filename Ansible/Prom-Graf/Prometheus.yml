@@ -1,0 +1,24 @@
+- hosts: prom_graf
+  tasks:
+
+    - name: Downloading Prometheus Tar file
+      get_url:
+        url: "https://github.com/prometheus/prometheus/releases/download/v2.51.2/prometheus-2.51.2.linux-amd64.tar.gz"
+        dest: "/tmp/prometheus-2.51.2.linux-amd64.tar.gz"
+
+    - name: Moving prometheus tar file from master to target
+      copy:
+        src: "/tmp/prometheus-2.51.2.linux-amd64.tar.gz"
+        dest: "/root/prometheus-2.51.2.linux-amd64.tar.gz"
+        remote_src: yes
+
+
+    - name: Unarchive a Prometheus file
+      unarchive:
+        src: "/root/prometheus-2.51.2.linux-amd64.tar.gz"
+        dest: "/root/"
+        remote_src: yes
+
+    - name: Starting Prometheus server
+      shell: "nohup /root/prometheus-2.51.2.linux-amd64/prometheus --config.file=/root/prometheus-2.51.2.linux-amd64/prometheus.yml  > /dev/null 2>&1 &"
+
