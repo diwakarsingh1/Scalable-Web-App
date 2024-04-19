@@ -1,0 +1,23 @@
+- hosts: prom_graf
+  tasks:
+
+    - name: Installing tar file of Grafana
+      get_url:
+        url: "https://dl.grafana.com/enterprise/release/grafana-enterprise-10.4.2.linux-amd64.tar.gz"
+        dest: "/tmp/grafana-enterprise-10.4.2.linux-amd64.tar.gz"
+
+    - name: Copying file to target node
+      copy:
+        src: "/tmp/grafana-enterprise-10.4.2.linux-amd64.tar.gz"
+        dest: "/root/"
+        remote_src: yes
+
+    - name: Unarchiving the grafana file
+      unarchive:
+        src: "/root/grafana-enterprise-10.4.2.linux-amd64.tar.gz"
+        dest: "/root/"
+        remote_src: yes
+
+    - name: Executing Grafana script
+      shell: "nohup /root/grafana-v10.4.2/bin/grafana-server > /dev/null 2>&1 &"
+
