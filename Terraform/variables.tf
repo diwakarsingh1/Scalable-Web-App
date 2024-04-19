@@ -21,4 +21,3 @@ variable "connection" {
 variable "user" {
     default = "ec2-user"
 }
-
