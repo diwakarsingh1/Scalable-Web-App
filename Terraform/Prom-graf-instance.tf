@@ -8,3 +8,5 @@ resource "aws_instance" "prom-graf" {
   }
 
 }
+
+
