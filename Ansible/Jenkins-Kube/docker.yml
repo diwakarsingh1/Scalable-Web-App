@@ -1,0 +1,37 @@
+- hosts: Jenkins_kube
+  tasks:
+    - name: Update dnf package
+      command: dnf update -y
+
+    - name: Installing Docker related dependencies
+      dnf:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - "yum-utils"
+        - "device-mapper-persistent-data"
+        - "lvm2"
+
+    - name: Add Docker repository configuration
+      get_url:
+        url: "https://download.docker.com/linux/rhel/docker-ce.repo"
+        dest: /tmp/docker-ce.repo
+
+    - name: Moving docker repo to /etc/yum.repos.d/
+      copy:
+        src: "/tmp/docker-ce.repo"
+        dest: "/etc/yum.repos.d/docker-ce.repo"
+        remote_src: yes
+
+
+    - name: Install Docker CE
+      package:
+        name: docker-ce
+        state: present
+
+    - name: Starting docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
