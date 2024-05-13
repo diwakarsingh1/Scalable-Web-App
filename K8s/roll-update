@@ -1,0 +1,2 @@
+kubectl set image deploy/my-project-app my-app-container=8755958480/finexo:v2 --all
+
