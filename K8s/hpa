@@ -1,0 +1,2 @@
+kubectl autoscale deployment my-project-app --cpu-percent=10 --min=3 --max=100
+
