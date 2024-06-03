@@ -1,0 +1,44 @@
+  222  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+  223  ls
+  224  sudo mv /tmp/eksctl /usr/local/bin
+  225  cd /usr/local/bin/
+  226  ls
+  227  chmod +x /usr/local/bin/eksctl
+  228   eksctl --version
+  229  eksctl version
+  230  eksctl create cluster
+  231  eksctl create cluster --name cluster --version 1.29 --region ap-south-1 --nodegroup-name linux-nodes --node-type t2.micro --nodes 2
+  232  cd
+  233  ls
+  234  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv.zip"
+  235  ls
+  236  tar -xvzf awscliv.zip
+  237  yum install unzip -y
+  238  ls
+  239  unzip -q awscliv.zip
+  240  ls
+  241  aws --version
+  242  ./aws/install
+  243  aws --version
+  244  aws configure
+  245   eksctl create cluster --name my-project-cluster --version 1.29 --region ap-south-1 --nodegroup-name linux-nodes --node-type t2.micro --nodes 2
+  246  kubectl get pods
+  247  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  248  chmod +x ./kubectl
+  249  sudo mv ./kubectl /usr/local/bin/kubectl
+  250  kubectl get pods
+
+
+
+
+ eksctl create cluster --name k8s-project-cluster --version 1.29 --region ap-south-1 --nodegroup-name k8s-worker-nodes --node-type t2.xlarge  --nodes 2
+
+
+
+440  kubectl -n kube-system get deployment/metrics-server
+  441  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+  442  kubectl get deployment metrics-server -n kube-system
+  443  kubectl -n kube-system get deployment/metrics-server
+  444  kubectl get pods -n kube-system
+ siege -q -c 220 http://a096630f9896542d29f01820983f621b-89618066.ap-south-1.elb.amazonaws.com/
+sudo dnf install inotify-tools
